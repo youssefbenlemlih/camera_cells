@@ -1,62 +1,61 @@
 var capture;
 var precision;
-var width ;
-var heigth ;
-var circlesRadius ;
-var circlesDiff ;
+var width;
+var heigth;
+var circlesRadius;
+var circlesDiff;
 
 
 function setup() {
   //scale(0.5);
 
   circlesRadius = 10;
-  width = 640;
-  heigth = 360;
   frameRate(10);
-  createCanvas(width,heigth);
-capture = createCapture(VIDEO);
-//capture.hide();
-capture.size(width, heigth);
-precision = 1;
+  capture = createCapture(VIDEO);
+  width = capture.width
+  heigth = capture.heigth;
+  createCanvas(width+10, heigth+10);
+  // capture.size(width, heigth);
+  precision = 1;
 
 }
 
 function draw() {
   background(255);
-    for (var x=0; x<width;x=x+2*circlesRadius){
-        for (var y=0; y<heigth;y=y+2*circlesRadius){
-          let r=0;
-          let g=0;
-          let b=0;
-          let a=0;
-          for (var x1=x; x1<2*circlesRadius+x;x1=x1+1){
-              for (var y1=y; y1<2*circlesRadius+y;y1=y1+1){
-                var c =capture.get(x1,y1);
-                r = r+ c[0];
-                g = g+ c[1];
-                b = b+ c[2];
+  for (var x = 0; x < width; x = x + 2 * circlesRadius) {
+    for (var y = 0; y < heigth; y = y + 2 * circlesRadius) {
+      let r = 0;
+      let g = 0;
+      let b = 0;
+      let a = 0;
+      for (var x1 = x; x1 < 2 * circlesRadius + x; x1 = x1 + 1) {
+        for (var y1 = y; y1 < 2 * circlesRadius + y; y1 = y1 + 1) {
+          var c = capture.get(x1, y1);
+          r = r + c[0];
+          g = g + c[1];
+          b = b + c[2];
 
-            }
-          }
-          r =  r/(4*circlesRadius*circlesRadius);
-          g = g/(4*circlesRadius*circlesRadius);
-          b = b/(4*circlesRadius*circlesRadius);
-          //let c = capture.get(x,y);
-          //stroke(255)
-          noStroke()
-          var c = getPaletColor(color(r,g,b))
-          fill(c);
-
-          ellipse((x+circlesRadius),(y+circlesRadius),circlesRadius*2,circlesRadius*2)
-          //rect((x+circlesRadius),(y+circlesRadius),circlesRadius*2,circlesRadius*2,50,0,20,0)
-         //rect((x),(y),circlesRadius*2,circlesRadius*2)
+        }
       }
+      r = r / (4 * circlesRadius * circlesRadius);
+      g = g / (4 * circlesRadius * circlesRadius);
+      b = b / (4 * circlesRadius * circlesRadius);
+      //let c = capture.get(x,y);
+      //stroke(255)
+      noStroke()
+      var c = getPaletColor(color(r, g, b))
+      fill(c);
+
+      ellipse((x + circlesRadius), (y + circlesRadius), circlesRadius * 2, circlesRadius * 2)
+      //rect((x+circlesRadius),(y+circlesRadius),circlesRadius*2,circlesRadius*2,50,0,20,0)
+      //rect((x),(y),circlesRadius*2,circlesRadius*2)
     }
+  }
   //  updatePixels();
 
 }
-function getPaletColor(c){
-return c;
+function getPaletColor(c) {
+  return c;
   var colors = [
     color('#eb6841'),
     color('#eb6841'),
@@ -89,32 +88,27 @@ return c;
     // color( '#ffa700'),
     // //color('#ffffff')
   ];
-  var colorIndex =0;
-  for (var i =0;i<colors.length;i++)
-  {
-    if (colorDistance(colors[colorIndex],colors[i])>=colorDistance(c,colors[i]))
-    {
-      colorIndex=i;
+  var colorIndex = 0;
+  for (var i = 0; i < colors.length; i++) {
+    if (colorDistance(colors[colorIndex], colors[i]) >= colorDistance(c, colors[i])) {
+      colorIndex = i;
     }
   }
 
   return colors[colorIndex];
 
 }
-function colorDistance(a,b){
-  return sq(red(a)+red(b))+sq(green(a)+green(b))+sq(blue(a)+blue(b))+sq(alpha(a)+alpha(b));
+function colorDistance(a, b) {
+  return sq(red(a) + red(b)) + sq(green(a) + green(b)) + sq(blue(a) + blue(b)) + sq(alpha(a) + alpha(b));
 }
-function mouseClicked()
-{
+function mouseClicked() {
 
 }
-function mouseWheel(event)
-{
+function mouseWheel(event) {
 
 }
 
-function doubleClicked()
-{
+function doubleClicked() {
 
 }
 
